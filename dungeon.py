@@ -1,26 +1,36 @@
 # Input: L R C (i.e. 3 4 5)
 # Ouput: Escaped in 11 minute(s)
 
-def load_file():
-    file_name = input('Introduce la ruta del archivo de entradas: ')
-    with open(file_name) as fp:
-        params = fp.read().split(" ")
-    levels = params[0]
-    rows = params[1]
-    columns = params[2]
 
-    print(levels)
-    print(rows)
-    print(columns)
+class Maze:
+    @classmethod
+    def load_file(self, fname):
+        with open(fname) as fp:
+            # params = fp.read().split(" ")
+            lines = (line.rstrip("\r\n") for line in fp)
+            maze = [list(line) for line in lines]
+        return self(maze)
 
-def draw_dungeon(parameter_list):
-    pass
+        # levels = params[0]
+        # rows = params[1]
+        # columns = params[2]
 
-def move(parameter_list):
-    pass
+    def __init__(self, maze):
+        self.maze = maze
+
+    def __str__(self):
+        return '\n'.join(''.join(line) for line in self.maze)
+
+    def move(self, parameter_list):
+        pass
+
 
 def main():
-    load_file()
+    # file_name = input('Introduce la ruta del archivo de entradas: ')
+    maze = Maze().load_file("input.txt")
+    print(maze)
+    # show_dungeon()
+
 
 if __name__ == '__main__':
     main()
