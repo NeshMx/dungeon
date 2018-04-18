@@ -10,11 +10,6 @@ class Node:
         self.adj = adj
 
 
-class Layer:
-    def __init__(self, maze):
-        self.maze = maze
-
-
 class Maze:
 
     def __init__(self, maze=[]):
@@ -25,23 +20,28 @@ class Maze:
 
     @classmethod
     def load_maze(cls, fname):
-        maze_arrays = []
+        all_mazes = []
         with open(fname) as inf:
             lines = (line.rstrip("\r\n") for line in inf)
-            start_maze = False
-            id = 1
+            big_maze = []
+            tmp_maze = []
             for line in list(lines):
+                if len(line) < 1:
+                    big_maze.append(tmp_maze)
+                    tmp_maze = []
+                    continue
                 try:
                     if re.match('^[-+]?[0-9]+$', line[0]):
-                        tmp_maze = Maze()
-                        id = 0
-                        start_maze = True
+                        all_mazes.append(Maze(big_maze))
+                        big_maze = [] if line[0] != '0' else big_maze
                         continue
-                    if start_maze:
-                        for ch in line:
-                            tmp_node = Node(id+=1, ch, )
                 except:
                     pass
+                tmp_maze.append(list(line))
+
+            print(all_mazes)
+            for maze in all_mazes:
+                print(maze)
 
 
 def main():
