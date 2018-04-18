@@ -2,5 +2,6 @@
     "files.associations": {
         "string": "cpp",
         "xstring": "cpp"
-    }
+    },
+    "python.pythonPath": "D:\\Users\\212631045\\AppData\\Local\\Programs\\Python\\Python36-32\\python.exe"
 }
