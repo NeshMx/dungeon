@@ -1,5 +1,5 @@
 import re
-
+import graph
 
 class Node:
     def __init__(self, id, value, adj):
@@ -14,7 +14,7 @@ class Maze:
 
     def __init__(self, maze=[]):
         self.maze = maze
-        self.maze_nodes = []
+        self.maze_graph = graph.Graph()
 
     def __str__(self):
         for m in self.maze:
