@@ -1,4 +1,14 @@
+class Layer:
+    def __init__(self, maze):
+        self.maze = maze
+
+
 class Maze:
+
+    @classmethod
+    def get_layers(self, ):
+        
+
     @classmethod
     def load_maze(cls, fname):
         with open(fname) as inf:
