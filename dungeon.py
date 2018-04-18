@@ -14,9 +14,15 @@ class Maze:
 
     def __init__(self, maze=[]):
         self.maze = maze
+        self.maze_nodes = []
 
     def __str__(self):
-        return "\n".join(''.join(line) for line in self.maze)
+        for m in self.maze:
+            for line in m:
+                print(line)
+            
+        # return "\n".join(''.join(line) for line in self.maze)
+        return ''
 
     @classmethod
     def load_maze(cls, fname):
