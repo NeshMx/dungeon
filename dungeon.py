@@ -1,6 +1,7 @@
 import re
 import graph
 
+
 class Node:
     def __init__(self, id, value, adj):
         self.id = id
@@ -20,9 +21,39 @@ class Maze:
         for m in self.maze:
             for line in m:
                 print(line)
-            
+
         # return "\n".join(''.join(line) for line in self.maze)
         return ''
+
+    def matrix_2_graph(self):
+        for i, layer in enumerate(self.maze):
+            for j, row in enumerate(layer):
+                for k, ch in enumerate(row):
+                    id = str(i) + str(j) + str(k)
+                    neighbor_right = str(i) + str(j) + str(k + 1)
+                    neighbor_left = str(i) + str(j) + str(k - 1)
+                    neighbor_down = str(i) + str(j + 1) + str(k)
+                    neighbor_up = str(i) + str(j - 1) + str(k)
+                    neighbor_forward = str(i + 1) + str(j) + str(k)
+                    neighbor_backward = str(i - 1) + str(j) + str(k)
+
+                    if not '#' == ch:
+                        self.maze_graph.add_vertex(id, ch)
+                        self.maze_graph.add_edge([id, neighbor_right])
+                        self.maze_graph.add_edge([id, neighbor_left])
+                        self.maze_graph.add_edge([id, neighbor_down])
+                        self.maze_graph.add_edge([id, neighbor_up])
+                        self.maze_graph.add_edge([id, neighbor_forward])
+                        self.maze_graph.add_edge([id, neighbor_backward])
+
+        # print(self.maze_graph)
+        """ print('Vertex: ')
+        print(self.maze_graph.vertices())
+        print('Edges: ')
+        print(self.maze_graph.edges()) """
+        print('Solución : ')
+        print(self.maze_graph.find_all_paths('000', '024'))
+        ddddvar = input('input dummy')
 
     @classmethod
     def load_maze(cls, fname):
@@ -45,9 +76,10 @@ class Maze:
                     pass
                 tmp_maze.append(list(line))
 
-            print(all_mazes)
+            # print(all_mazes)
             for maze in all_mazes:
-                print(maze)
+                maze.matrix_2_graph()
+                # print(maze)
 
 
 def main():
