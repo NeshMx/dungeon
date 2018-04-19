@@ -110,14 +110,16 @@ class Maze:
                     pass
                 tmp_maze.append(list(line))
 
-        counter = 0            
+        counter = 0
         for maze in all_mazes:
             if counter > 0:
                 maze.matrix_2_graph()
                 if maze.solution_time != None:
-                    print('Tiempo para salir del laberinto ' + str(counter) + ' : ' +  str(maze.solution_time) + ' segundos.')
+                    print('Tiempo para salir del laberinto ' + str(counter) +
+                          ' : ' + str(maze.solution_time) + ' segundos.')
                 else:
-                    print('No fue posible salir del laberinto ' + str(counter) +'...')
+                    print('No fue posible salir del laberinto ' +
+                          str(counter) + '...')
             counter += 1
 
 
