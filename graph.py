@@ -3,19 +3,18 @@ A simple Python graph class, demonstrating the essential
 facts and functionalities of graphs.
 """
 
+# from IPython import embed
 
 class Graph(object):
 
-    def __init__(self, graph_dict=None, vertex_value=None):
+    def __init__(self, graph_dict=None):
         """ initializes a graph object 
             If no dictionary or None is given, 
             an empty dictionary will be used
         """
         if graph_dict == None:
             graph_dict = {}
-            vertex_value = {}
         self.__graph_dict = graph_dict
-        self.__vertex_value = vertex_value
 
     def vertices(self):
         """ returns the vertices of a graph """
@@ -25,7 +24,7 @@ class Graph(object):
         """ returns the edges of a graph """
         return self.__generate_edges()
 
-    def add_vertex(self, vertex, val='X'):
+    def add_vertex(self, vertex):
         """ If the vertex "vertex" is not in 
             self.__graph_dict, a key "vertex" with an empty
             list as a value is added to the dictionary. 
@@ -33,7 +32,6 @@ class Graph(object):
         """
         if vertex not in self.__graph_dict:
             self.__graph_dict[vertex] = []
-            self.__vertex_value[vertex] = val
 
     def add_edge(self, edge):
         """ assumes that edge is of type set, tuple or list; 
@@ -42,17 +40,14 @@ class Graph(object):
         edge = set(edge)
         (vertex1, vertex2) = tuple(edge)
         if vertex1 in self.__graph_dict:
-            # if vertex2 in self.__graph_dict:
             self.__graph_dict[vertex1].append(vertex2)
         else:
             self.__graph_dict[vertex1] = [vertex2]
-            # pass
 
     def find_all_paths(self, start_vertex, end_vertex, path=[]):
         """ find all paths from start_vertex to 
             end_vertex in graph """
         graph = self.__graph_dict
-        print(graph)
         path = path + [start_vertex]
         if start_vertex == end_vertex:
             return [path]
@@ -68,25 +63,25 @@ class Graph(object):
                     paths.append(p)
         return paths
 
-    # def find_path(self, start_vertex, end_vertex, path=None):
-    #     """ find a path from start_vertex to end_vertex 
-    #         in graph """
-    #     if path == None:
-    #         path = []
-    #     graph = self.__graph_dict
-    #     path = path + [start_vertex]
-    #     if start_vertex == end_vertex:
-    #         return path
-    #     if start_vertex not in graph:
-    #         return None
-    #     for vertex in graph[start_vertex]:
-    #         if vertex not in path:
-    #             extended_path = self.find_path(vertex,
-    #                                            end_vertex,
-    #                                            path)
-    #             if extended_path:
-    #                 return extended_path
-    #     return None
+    def find_path(self, start_vertex, end_vertex, path=None):
+        """ find a path from start_vertex to end_vertex 
+            in graph """
+        if path == None:
+            path = []
+        graph = self.__graph_dict
+        path = path + [start_vertex]
+        if start_vertex == end_vertex:
+            return path
+        if start_vertex not in graph:
+            return None
+        for vertex in graph[start_vertex]:
+            if vertex not in path:
+                extended_path = self.find_path(vertex, 
+                                               end_vertex, 
+                                               path)
+                if extended_path: 
+                    return extended_path
+        return None
 
     def __generate_edges(self):
         """ A static method generating the edges of the 
@@ -104,7 +99,7 @@ class Graph(object):
     def __str__(self):
         res = "vertices: "
         for k in self.__graph_dict:
-            res += str(k) + " " + str(self.__vertex_value[k]) + "   "
+            res += str(k) + " "
         res += "\nedges: "
         for edge in self.__generate_edges():
             res += str(edge) + " "
@@ -113,13 +108,21 @@ class Graph(object):
 
 if __name__ == "__main__":
 
-    g = {"a": ["d"],
-         "b": ["c"],
-         "c": ["b", "c", "d", "e"],
-         "d": ["a", "c"],
-         "e": ["c"],
-         "f": []
-         }
+    g = {"000": ["001"],
+         "001": ["000", "002"],
+         "002": ["001", "003"],
+         "003": ["002", "004"],
+         "004": ["003", "014"],
+         "014": ["004", "024"],
+         "024": []}
+
+    # g = {"a": ["d"],
+    #      "b": ["c"],
+    #      "c": ["b", "c", "d", "e"],
+    #      "d": ["a", "c"],
+    #      "e": ["c"],
+    #      "f": []
+    #      }
 
     graph = Graph(g)
 
@@ -129,24 +132,27 @@ if __name__ == "__main__":
     print("Edges of graph:")
     print(graph.edges())
 
-    print("Add vertex:")
-    graph.add_vertex("z")
+    print("Solution")
+    print(graph.find_all_paths("000", "024"))
 
-    print("Vertices of graph:")
-    print(graph.vertices())
+    # print("Add vertex:")
+    # graph.add_vertex("z")
 
-    print("Add an edge:")
-    graph.add_edge({"a", "z"})
+    # print("Vertices of graph:")
+    # print(graph.vertices())
 
-    print("Vertices of graph:")
-    print(graph.vertices())
+    # print("Add an edge:")
+    # graph.add_edge({"a", "z"})
 
-    print("Edges of graph:")
-    print(graph.edges())
+    # print("Vertices of graph:")
+    # print(graph.vertices())
 
-    print('Adding an edge {"x","y"} with new vertices:')
-    graph.add_edge({"x", "y"})
-    print("Vertices of graph:")
-    print(graph.vertices())
-    print("Edges of graph:")
-    print(graph.edges())
+    # print("Edges of graph:")
+    # print(graph.edges())
+
+    # print('Adding an edge {"x","y"} with new vertices:')
+    # graph.add_edge({"x", "y"})
+    # print("Vertices of graph:")
+    # print(graph.vertices())
+    # print("Edges of graph:")
+    # print(graph.edges())
